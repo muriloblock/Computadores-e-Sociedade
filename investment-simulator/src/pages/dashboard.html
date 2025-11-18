@@ -168,10 +168,16 @@
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
+    <!-- Carregar API antes dos outros scripts -->
+    <script src="../js/api.js"></script>
     <script src="../js/simulator.js"></script>
+    <script src="../js/main.js"></script>
     <script src="../js/charts.js"></script>
     <script>
+        // Variáveis globais para armazenar instâncias dos gráficos
+        let graficoComparativo = null;
+        let graficoEvolucaoComparativo = null;
+        
         function gerarComparativo() {
             const valor = parseFloat(document.getElementById('comp-valor').value);
             const aporte = parseFloat(document.getElementById('comp-aporte').value);
@@ -213,12 +219,20 @@
         }
         
         function criarGraficosComparativos(resultados, nomes) {
+            // Destruir gráficos anteriores se existirem
+            if (graficoComparativo) {
+                graficoComparativo.destroy();
+            }
+            if (graficoEvolucaoComparativo) {
+                graficoEvolucaoComparativo.destroy();
+            }
+            
             // Gráfico de barras comparativo
             const ctx1 = document.getElementById('grafico-comparativo').getContext('2d');
             const tipos = Object.keys(resultados);
             const valores = tipos.map(tipo => resultados[tipo].valorFinal);
             
-            new Chart(ctx1, {
+            graficoComparativo = new Chart(ctx1, {
                 type: 'bar',
                 data: {
                     labels: tipos.map(tipo => nomes[tipo]),
@@ -265,7 +279,7 @@
                 };
             });
             
-            new Chart(ctx2, {
+            graficoEvolucaoComparativo = new Chart(ctx2, {
                 type: 'line',
                 data: {
                     labels: resultados[tipos[0]].evolucao.map((_, index) => `Mês ${index}`),
@@ -315,8 +329,9 @@
             }).format(valor);
         }
         
-        // Gerar comparativo inicial
-        document.addEventListener('DOMContentLoaded', () => {
+        // Gerar comparativo inicial com taxas da API
+        document.addEventListener('DOMContentLoaded', async () => {
+            await atualizarTaxasReais();
             gerarComparativo();
         });
     </script>

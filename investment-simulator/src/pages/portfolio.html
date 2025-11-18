@@ -218,10 +218,16 @@
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
+    <!-- Carregar API antes dos outros scripts -->
+    <script src="../js/api.js"></script>
     <script src="../js/simulator.js"></script>
+    <script src="../js/main.js"></script>
     <script src="../js/charts.js"></script>
     <script>
+        // Variáveis globais para armazenar instâncias dos gráficos
+        let graficoAlocacao = null;
+        let graficoEvolucao = null;
+        
         const alocacoesPorPerfil = {
             'conservador': {
                 'cdb': 0.4,
@@ -301,9 +307,14 @@
         }
         
         function criarGraficoAlocacao(alocacao, valor) {
+            // Destruir gráfico anterior se existir
+            if (graficoAlocacao) {
+                graficoAlocacao.destroy();
+            }
+            
             const ctx = document.getElementById('grafico-alocacao').getContext('2d');
             
-            new Chart(ctx, {
+            graficoAlocacao = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: Object.keys(alocacao).map(tipo => nomesInvestimentos[tipo]),
@@ -335,6 +346,11 @@
         }
         
         function criarGraficoEvolucaoPortfolio(alocacao, valor) {
+            // Destruir gráfico anterior se existir
+            if (graficoEvolucao) {
+                graficoEvolucao.destroy();
+            }
+            
             const ctx = document.getElementById('grafico-evolucao-portfolio').getContext('2d');
             
             const meses = Array.from({length: 121}, (_, i) => i); // 10 anos
@@ -348,7 +364,7 @@
                 return valorMes;
             });
             
-            new Chart(ctx, {
+            graficoEvolucao = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: meses.map(m => `${Math.floor(m/12)}a ${m%12}m`),
@@ -389,33 +405,11 @@
             }).format(valor);
         }
         
-        // Criar portfólio inicial
-        document.addEventListener('DOMContentLoaded', () => {
+        // Carregar taxas e criar portfólio inicial
+        document.addEventListener('DOMContentLoaded', async () => {
+            await atualizarTaxasReais();
             criarPortfolio();
         });
     </script>
-</body>
-</html>
-            <h2>Your Investments</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Investment</th>
-                        <th>Amount Invested</th>
-                        <th>Current Value</th>
-                        <th>Profit/Loss</th>
-                    </tr>
-                </thead>
-                <tbody id="investment-table-body">
-                    <!-- Investment rows will be dynamically added here -->
-                </tbody>
-            </table>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Investment Simulator. All rights reserved.</p>
-    </footer>
-    <script src="../js/main.js"></script>
-    <script src="../js/simulator.js"></script>
 </body>
 </html>

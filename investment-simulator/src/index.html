@@ -142,8 +142,34 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <!-- Carregar API antes dos outros scripts -->
+    <script src="js/api.js"></script>
     <script src="js/simulator.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/charts.js"></script>
+    
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
 </body>
 </html>
