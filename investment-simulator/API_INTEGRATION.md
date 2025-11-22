@@ -2,7 +2,7 @@
 
 ## 📊 Visão Geral
 
-O simulador agora utiliza **taxas reais** obtidas da API oficial do Banco Central do Brasil para fornecer simulações mais precisas e atualizadas.
+O **ModelaInvest** utiliza **taxas reais** obtidas da API oficial do Banco Central do Brasil para fornecer simulações mais precisas e atualizadas.
 
 ## 🔗 API Utilizada
 

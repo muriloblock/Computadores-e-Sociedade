@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Simulador de Investimentos</title>
+    <title>Portfólio - ModelaInvest</title>
+    <link rel="icon" type="image/png" href="../../assets/images/investsmart-logo.png">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/simulator.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/logo.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>💰 Simulador de Investimentos</h1>
+            <div class="logo-header">
+                <img src="../../assets/images/investsmart-logo.png" alt="ModelaInvest Logo">
+            </div>
             <nav>
                 <ul>
                     <li><a href="../index.html">Simulador</a></li>
@@ -296,7 +300,8 @@
             'tesouro-selic': 'Tesouro Selic',
             'tesouro-ipca': 'Tesouro IPCA+',
             'acoes': 'Ações',
-            'fiis': 'FIIs'
+            'fiis': 'FIIs',
+            'nao-alocado': 'Não Alocado'
         };
         
         function criarPortfolio() {
@@ -322,6 +327,20 @@
             
             Object.entries(alocacao).forEach(([tipo, percentual]) => {
                 const valorAlocado = valor * percentual;
+                
+                // Não simular investimento para categoria "Não Alocado"
+                if (tipo === 'nao-alocado') {
+                    html += `
+                        <div class="allocation-row" style="opacity: 0.6;">
+                            <span class="investment-name">${nomesInvestimentos[tipo]}</span>
+                            <span class="investment-percent">${(percentual * 100).toFixed(1)}%</span>
+                            <span class="investment-value">${formatarMoeda(valorAlocado)}</span>
+                            <span class="investment-future">${formatarMoeda(valorAlocado)}</span>
+                        </div>
+                    `;
+                    return;
+                }
+                
                 const resultado = simularInvestimento(tipo, valorAlocado, 0, horizonte);
                 const rendimento = resultado.valorFinal - resultado.valorInvestido;
                 
@@ -356,26 +375,49 @@
         }
         
         function criarGraficoAlocacao(alocacao, valor) {
-            // Destruir gráfico anterior se existir
-            if (graficoAlocacao) {
-                graficoAlocacao.destroy();
-            }
-            
             const ctx = document.getElementById('grafico-alocacao').getContext('2d');
             
+            const labels = Object.keys(alocacao).map(tipo => nomesInvestimentos[tipo]);
+            const data = Object.values(alocacao).map(p => p * valor);
+            
+            // Se o gráfico já existe, atualizar dados com animação
+            if (graficoAlocacao) {
+                graficoAlocacao.data.labels = labels;
+                graficoAlocacao.data.datasets[0].data = data;
+                graficoAlocacao.update('active'); // Animação suave
+                return;
+            }
+            
+            // Criar novo gráfico apenas na primeira vez
             graficoAlocacao = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: Object.keys(alocacao).map(tipo => nomesInvestimentos[tipo]),
                     datasets: [{
                         data: Object.values(alocacao).map(p => p * valor),
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
-                        ]
+                        backgroundColor: Object.keys(alocacao).map(tipo => {
+                            if (tipo === 'nao-alocado') return '#E2E8F0'; // Cinza claro
+                            const cores = {
+                                'poupanca': '#FF6384',
+                                'cdb': '#36A2EB',
+                                'lci': '#FFCE56',
+                                'tesouro-selic': '#4BC0C0',
+                                'tesouro-ipca': '#9966FF',
+                                'acoes': '#FF9F40',
+                                'fiis': '#4BC0C0'
+                            };
+                            return cores[tipo] || '#999';
+                        })
                     }]
                 },
                 options: {
                     responsive: true,
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    },
                     plugins: {
                         title: {
                             display: true,
@@ -388,6 +430,22 @@
                                     return `${context.label}: ${formatarMoeda(context.parsed)} (${percentage}%)`;
                                 }
                             }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    transitions: {
+                        active: {
+                            animation: {
+                                duration: 400
+                            }
                         }
                     }
                 }
@@ -395,11 +453,6 @@
         }
         
         function criarGraficoEvolucaoPortfolio(alocacao, valor, horizonteAnos = 10) {
-            // Destruir gráfico anterior se existir
-            if (graficoEvolucao) {
-                graficoEvolucao.destroy();
-            }
-            
             const ctx = document.getElementById('grafico-evolucao-portfolio').getContext('2d');
             
             const totalMeses = horizonteAnos * 12;
@@ -414,6 +467,16 @@
                 return valorMes;
             });
             
+            // Se o gráfico já existe, atualizar dados com animação
+            if (graficoEvolucao) {
+                graficoEvolucao.data.labels = meses.map(m => `${Math.floor(m/12)}a ${m%12}m`);
+                graficoEvolucao.data.datasets[0].data = evolucaoTotal;
+                graficoEvolucao.options.plugins.title.text = `Evolução do Portfólio (${horizonteAnos} anos)`;
+                graficoEvolucao.update('active'); // Animação suave
+                return;
+            }
+            
+            // Criar novo gráfico apenas na primeira vez
             graficoEvolucao = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -424,15 +487,23 @@
                         borderColor: '#36A2EB',
                         backgroundColor: 'rgba(54, 162, 235, 0.1)',
                         fill: true,
-                        tension: 0.1
+                        tension: 0.4
                     }]
                 },
                 options: {
                     responsive: true,
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    },
                     plugins: {
                         title: {
                             display: true,
                             text: `Evolução do Portfólio (${horizonteAnos} anos)`
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
                         }
                     },
                     scales: {
@@ -441,6 +512,13 @@
                                 callback: function(value) {
                                     return formatarMoeda(value);
                                 }
+                            }
+                        }
+                    },
+                    transitions: {
+                        active: {
+                            animation: {
+                                duration: 400
                             }
                         }
                     }
@@ -492,10 +570,12 @@
                     soma += percent;
                 }
             });
-            // Normalizar se soma != 100 (evita erro visual, mas alerta já aparece)
-            if (soma > 0 && Math.abs(soma - 100) > 0.001) {
-                Object.keys(aloc).forEach(k => { aloc[k] = aloc[k] / (soma/100); });
+            
+            // Se não somar 100%, adicionar categoria "Não Alocado"
+            if (soma < 100 && soma > 0) {
+                aloc['nao-alocado'] = (100 - soma) / 100;
             }
+            
             return aloc;
         }
 

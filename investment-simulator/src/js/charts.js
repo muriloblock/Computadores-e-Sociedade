@@ -1,4 +1,4 @@
-// Gerenciamento de gráficos para o Simulador de Investimentos
+// ModelaInvest - Gerenciamento de gráficos
 // Utiliza Chart.js para visualização de dados
 
 let graficoEvolucao = null;

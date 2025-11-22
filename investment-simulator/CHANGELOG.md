@@ -1,4 +1,4 @@
-# 📝 Notas da Versão 2.0 - Integração API Banco Central
+# 📝 Notas da Versão 2.0 - InvestSmart com API Banco Central
 
 **Data**: 17 de Novembro de 2025  
 **Versão**: 2.0.0
@@ -7,7 +7,7 @@
 
 ### ✨ Integração com API do Banco Central do Brasil
 
-O simulador agora utiliza **taxas reais e atualizadas** diretamente da API oficial do Banco Central do Brasil!
+O **InvestSmart** agora utiliza **taxas reais e atualizadas** diretamente da API oficial do Banco Central do Brasil!
 
 #### O que mudou:
 

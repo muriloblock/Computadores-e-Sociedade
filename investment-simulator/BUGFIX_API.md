@@ -1,4 +1,4 @@
-# 🔧 Correção - Formato de Dados da API BCB
+# 🔧 InvestSmart - Correção Formato de Dados da API BCB
 
 ## 🐛 Problema Identificado
 

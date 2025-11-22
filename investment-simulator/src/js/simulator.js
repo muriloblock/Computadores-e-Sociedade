@@ -1,4 +1,4 @@
-// Lógica do Simulador de Investimentos
+// ModelaInvest - Lógica do Simulador de Investimentos
 // Contém cálculos para diferentes cenários de investimento
 
 // Taxas de rentabilidade mensais para diferentes tipos de investimento

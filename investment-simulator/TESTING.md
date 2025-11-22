@@ -1,8 +1,8 @@
-# 🚀 Guia Rápido - Testando a Integração
+# 🚀 Guia Rápido - Testando a Integração do InvestSmart
 
 ## Como testar a implementação
 
-### Opção 1: Testar no Simulador Principal
+### Opção 1: Testar no InvestSmart Principal
 
 1. Abra o arquivo `src/index.html` no navegador
 2. Observe o console do navegador (F12) para ver os logs
@@ -22,7 +22,7 @@
 
 ### Opção 3: Console do Navegador
 
-Abra qualquer página do simulador, pressione F12 e execute:
+Abra qualquer página do InvestSmart, pressione F12 e execute:
 
 ```javascript
 // Buscar taxas
@@ -69,7 +69,7 @@ console.log('CDB anual:', taxaMensalParaAnual(taxasInvestimento['cdb']).toFixed(
 Ao abrir o console, você deve ver algo como:
 
 ```
-Simulador de Investimentos Inicializado
+InvestSmart Inicializado
 Buscando taxas atualizadas do Banco Central...
 Taxas atualizadas: {
   poupanca: 0.004845,

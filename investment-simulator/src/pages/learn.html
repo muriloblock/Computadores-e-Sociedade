@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprender sobre Finanças - Simulador de Investimentos</title>
+    <title>Aprender - ModelaInvest</title>
+    <link rel="icon" type="image/png" href="../../assets/images/investsmart-logo.png">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/simulator.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/logo.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>💰 Simulador de Investimentos</h1>
+            <div class="logo-header">
+                <img src="../../assets/images/investsmart-logo.png" alt="ModelaInvest Logo">
+            </div>
             <nav>
                 <ul>
                     <li><a href="../index.html">Simulador</a></li>
@@ -141,69 +145,6 @@
                 </div>
             </div>
         </section>
-
-        <section class="quiz-section" id="quiz-section">
-            <div class="container">
-                <div class="quiz-header">
-                    <h2>Aprendizado Gamificado</h2>
-                    <p>Deslize para a direita se a afirmação for verdadeira ou para a esquerda se for falsa. Use os botões como atalho.</p>
-                </div>
-
-                <div class="quiz-area">
-                    <div class="quiz-status">
-                        <span id="quiz-progress">Preparando perguntas...</span>
-                        <span id="quiz-score">0 acertos</span>
-                    </div>
-
-                    <div class="quiz-card-stack" id="quiz-card-stack" aria-live="polite">
-                        <!-- Cartas adicionadas dinamicamente -->
-                    </div>
-
-                    <div class="quiz-swipe-hint">
-                        <div class="quiz-swipe-hint-left">
-                            <span>←</span> Falso
-                        </div>
-                        <div class="quiz-swipe-hint-right">
-                            Verdadeiro <span>→</span>
-                        </div>
-                    </div>
-
-                    <div class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></div>
-
-                    <button class="quiz-restart" id="quiz-restart" hidden>Jogar novamente</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="simulator-section">
-            <div class="container">
-                <h2>Calculadoras Úteis</h2>
-                
-                <div class="calculators">
-                    <div class="calculator-card">
-                        <h3>Calculadora de Juros Compostos</h3>
-                        <div class="calc-form">
-                            <input type="number" id="calc-principal" placeholder="Valor inicial (R$)">
-                            <input type="number" id="calc-rate" placeholder="Taxa anual (%)">
-                            <input type="number" id="calc-time" placeholder="Tempo (anos)">
-                            <button onclick="calcularJuros()" class="btn-primary">Calcular</button>
-                            <div id="juros-result" class="calc-result"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="calculator-card">
-                        <h3>Meta de Aposentadoria</h3>
-                        <div class="calc-form">
-                            <input type="number" id="meta-valor" placeholder="Meta desejada (R$)">
-                            <input type="number" id="meta-anos" placeholder="Anos para aposentar">
-                            <input type="number" id="meta-taxa" placeholder="Taxa esperada (%)">
-                            <button onclick="calcularMeta()" class="btn-primary">Calcular</button>
-                            <div id="meta-result" class="calc-result"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer>
@@ -211,15 +152,6 @@
             <p>&copy; 2025 Simulador de Investimentos. Desenvolvido para fins educativos.</p>
         </div>
     </footer>
-
-    <template id="quiz-card-template">
-        <article class="quiz-card" role="group" aria-roledescription="Carta de pergunta">
-            <div class="quiz-card-content">
-                <p class="quiz-card-text"></p>
-            </div>
-            <div class="quiz-card-hint"></div>
-        </article>
-    </template>
 
     <script src="../js/learn.js"></script>
 </body>

@@ -1,0 +1,108 @@
+/* InvestSmart - Estilos do Logo */
+
+/* Logo no Header */
+.logo-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s ease;
+}
+
+.logo-header:hover {
+    transform: scale(1.05);
+}
+
+.logo-header img {
+    height: 100px;
+    width: auto;
+    transition: filter 0.3s ease;
+}
+
+.logo-header img:hover {
+    filter: brightness(1.1);
+}
+
+.logo-header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #1a237e;
+}
+
+/* Logo na Hero Section */
+.hero img {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    animation: fadeInDown 1s ease-out;
+}
+
+/* Logo no Footer */
+footer img {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+footer img:hover {
+    opacity: 1;
+}
+
+/* Animações */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .logo-header img {
+        height: 60px;
+    }
+    
+    .logo-header h1 {
+        font-size: 1.4em;
+    }
+    
+    .hero img {
+        max-width: 350px;
+    }
+    
+    footer img {
+        max-width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .logo-header img {
+        height: 50px;
+    }
+    
+    .logo-header h1 {
+        font-size: 1.2em;
+    }
+    
+    .hero img {
+        max-width: 280px;
+    }
+}
+
+/* Favicon */
+link[rel="icon"] {
+    border-radius: 8px;
+}

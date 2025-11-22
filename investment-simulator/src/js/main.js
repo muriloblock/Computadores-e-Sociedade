@@ -1,8 +1,8 @@
-// Simulador de Investimentos - Arquivo principal JavaScript
+// ModelaInvest - Arquivo principal JavaScript
 // Inicializa a aplicação e gerencia funcionalidades gerais
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('Simulador de Investimentos Inicializado');
+    console.log('💡 ModelaInvest Inicializado');
     
     // Configurar ouvintes de eventos
     setupEventListeners();
